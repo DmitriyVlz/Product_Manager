@@ -92,4 +92,25 @@ class ProductManagerTest {
         Product[] actual = manager.searchBy(textToFind);
         assertArrayEquals(expected, actual);
     }
+    @Test
+    void shouldFindSmartphoneByBookIfExists(){
+        ProductRepository repository=new ProductRepository();
+        ProductManager manager=new ProductManager(repository);
+        Book book1 = new Book(1, "Телефон 1", 230, "Автор 1");
+        Book book2 = new Book(2, "Книга 2", 450, "Автор 2");
+        Book book3 = new Book(3, "Книга 3", 500, "Автор 3");
+        Smartphone phone1 = new Smartphone(4, "Телефон 1", 80000, "Производитель 1");
+        Smartphone phone2 = new Smartphone(5, "Телефон 2", 50000, "Производитель 2");
+        Smartphone phone3 = new Smartphone(6, "Телефон 3", 6000, "Производитель 3");
+        manager = new ProductManager(repository);
+        manager.addProduct(book1);
+        manager.addProduct(book2);
+        manager.addProduct(book3);
+        manager.addProduct(phone1);
+        manager.addProduct(phone2);
+        manager.addProduct(phone3);
+        Product[] actual=manager.searchBy("Телефон 1");
+        Product[] expected = new Product[]{book1, phone1};
+        assertArrayEquals(expected, actual);
+    }
 }
